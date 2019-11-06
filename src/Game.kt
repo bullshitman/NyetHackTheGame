@@ -25,11 +25,9 @@ private fun printPlayerStatus(
     println("$name $healthStatus")
 }
 
-private fun auraColor(isBlessed: Boolean, healthPoint: Int, isImmortal: Boolean): String {
-    val auraVisible = isBlessed && healthPoint > 50 || isImmortal
-    val auraColor = if (auraVisible) "GREEN" else "NONE"
-    return auraColor
-}
+private fun auraColor(isBlessed: Boolean, healthPoint: Int, isImmortal: Boolean) =
+    if (isBlessed && healthPoint > 50 || isImmortal) "GREEN" else "NONE"
+
 
 private fun formatHealthStatus(healthPoint: Int, isBlessed: Boolean) = when (healthPoint) {
         100 -> "is in good condition!"
