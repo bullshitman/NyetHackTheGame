@@ -27,6 +27,11 @@ fun main(args: Array<String>) {
         else -> "is in awful condition!"
     }
     //Player status
+    val statusString = "(HP)(A)(B) -> H"
+    println(statusString.replace("HP","$healthPoint",)
+                              .replace("A", if (auraVisible) auraColor else "NONE")
+                              .replace("B", if (isBlessed) "YES" else "NO")
+                              .replace("H", "$name $healthStatus"))
     println("(Aura: ${if (auraVisible) auraColor else "NONE"}) " + "(Blessed: ${if (isBlessed) "YES" else "NO"})")
     println("$name $healthStatus")
 }
