@@ -3,6 +3,7 @@ const val TAVERN_NAME = "Taernyl's Folly"
 var numberGallons = 5.0
 var playerGold = 10
 var playerSilver = 10
+var playerDragonCoin = 5
 fun main(args: Array<String>) {
     placeorder("shandy, Dragon's Breath, 5.91")
 //    placeorder("elixir,Shirley's Temple,4.12")
@@ -14,16 +15,26 @@ fun perfomPurchase(price: Double){
     val totalPurse = playerGold + (playerSilver/100.0)
     println("Total purse: $totalPurse")
     println("Purchasing item for $price")
-    val remainingBalance = totalPurse - price
+    var remainingBalance = 0.0
+    if (balanceCheckout(price)) {
+        remainingBalance = totalPurse - price
+        displayEstPintsNumber(1)
+    } else {
+        remainingBalance = totalPurse
+        println("Madrigal has no money for deal.")
+    }
     println("Remaining balance: ${"%.2f".format(remainingBalance)}")
     val remainingGold = remainingBalance.toInt()
     val remainingSilver = (remainingBalance % 1 * 100).roundToInt()
     playerGold = remainingGold
     playerSilver = remainingSilver
     displayBalance()
-    displayEstPintsNumber(1)
-    displayEstPintsNumber(12)
 
+}
+
+fun balanceCheckout(price: Double):Boolean {
+    val totalPurse = playerGold + (playerSilver/100.0)
+    return (totalPurse - price) > 0
 }
 
 fun displayEstPintsNumber(pintsNumber: Int) {
@@ -57,6 +68,7 @@ private fun placeorder(menuData: String) {
 
     val message = "Madrigal buys a $name ($type) for $price"
     println(message)
+    perfomPurchase(price.toDouble())
     perfomPurchase(price.toDouble())
     var phrase = "DRAGON'S BREATH: IT'S GOT WHAT ADVENTURERS CRAVE! $name"
     println("Madrigal exclaims: ${toDragonSpeak(phrase)}")
