@@ -13,9 +13,11 @@ fun perfomPurchase(price: Double){
     displayBalance()
     displayEstPintsNumber(0)
     val totalPurse = playerGold + (playerSilver/100.0)
+    val totalDracPurse = playerDragonCoin * 1.43
     println("Total purse: $totalPurse")
+    println("Total purse drac:  ${"%.2f".format(totalDracPurse)}")
     println("Purchasing item for $price")
-    var remainingBalance = 0.0
+    var remainingBalance: Double
     if (balanceCheckout(price)) {
         remainingBalance = totalPurse - price
         displayEstPintsNumber(1)
@@ -28,8 +30,22 @@ fun perfomPurchase(price: Double){
     val remainingSilver = (remainingBalance % 1 * 100).roundToInt()
     playerGold = remainingGold
     playerSilver = remainingSilver
+
+    if (dracBalanceCheckout(price)) {
+        remainingBalance = totalDracPurse - price
+        displayEstPintsNumber(1)
+    } else {
+        remainingBalance = totalDracPurse
+        println("Madrigal has no money for deal.")
+    }
+    println("Remaining balance: ${"%.2f".format(remainingBalance)}")
+    playerDragonCoin = remainingBalance.roundToInt()
     displayBalance()
 
+}
+
+fun dracBalanceCheckout(price: Double): Boolean {
+    return (playerDragonCoin * 1.43 - price) > 0
 }
 
 fun balanceCheckout(price: Double):Boolean {
@@ -45,7 +61,7 @@ fun displayEstPintsNumber(pintsNumber: Int) {
 }
 
 fun displayBalance() {
-    println("Player's purse balance: Gold $playerGold, Silver: $playerSilver")
+    println("Player's purse balance: Gold $playerGold, Silver: $playerSilver, DracCoin: $playerDragonCoin")
 }
 
 private fun toDragonSpeak(phrase: String) =
