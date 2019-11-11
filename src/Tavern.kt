@@ -2,9 +2,11 @@ import kotlin.math.roundToInt
 const val TAVERN_NAME = "Taernyl's Folly"
 var playerGold = 10
 var playerSilver = 10
+val patronList = listOf("Eli", "Mordoc", "Sophie")
 fun main(args: Array<String>) {
     placeorder("shandy, Dragon's Breath, 5.91")
 //    placeorder("elixir,Shirley's Temple,4.12")
+    println(patronList[0])
 }
 
 fun perfomPurchase(price: Double){
