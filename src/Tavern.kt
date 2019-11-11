@@ -1,5 +1,6 @@
 import kotlin.math.roundToInt
 const val TAVERN_NAME = "Taernyl's Folly"
+var numberGallons = 5.0
 var playerGold = 10
 var playerSilver = 10
 fun main(args: Array<String>) {
@@ -9,6 +10,7 @@ fun main(args: Array<String>) {
 
 fun perfomPurchase(price: Double){
     displayBalance()
+    displayEstPintsNumber(0)
     val totalPurse = playerGold + (playerSilver/100.0)
     println("Total purse: $totalPurse")
     println("Purchasing item for $price")
@@ -19,6 +21,16 @@ fun perfomPurchase(price: Double){
     playerGold = remainingGold
     playerSilver = remainingSilver
     displayBalance()
+    displayEstPintsNumber(1)
+    displayEstPintsNumber(12)
+
+}
+
+fun displayEstPintsNumber(pintsNumber: Int) {
+    val pintsAvailable = (numberGallons / 0.125) - (pintsNumber.toDouble())
+    println("Estimated number of pints: ${pintsAvailable.toInt()}")
+    numberGallons = (pintsAvailable * 0.125)
+    println("$TAVERN_NAME has: $numberGallons gallons.")
 }
 
 fun displayBalance() {
