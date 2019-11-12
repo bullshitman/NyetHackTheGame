@@ -15,13 +15,11 @@ fun main(args: Array<String>) {
     }else{
         println("The tavern master says: No, they departed hours ago.")
     }
-    println(patronList)
-    patronList.remove("Eli")
-    patronList.add("Alex")
-    patronList.add(0, "Alex")
-    patronList[0] = "Alexis"
-    println(patronList)
-    placeorder("shandy, Dragon's Breath, 5.91")
+    patronList.forEachIndexed { index,  patron ->
+        println("Good evening $patron - you're #${index + 1} in line.")
+        placeorder(patron, "shandy,Dragon's Breath,5.91")
+    }
+//    placeorder("shandy, Dragon's Breath, 5.91")
 //    placeorder("elixir,Shirley's Temple,4.12")
 }
 
@@ -55,21 +53,20 @@ private fun toDragonSpeak(phrase: String) =
         }
     }
 
-private fun placeorder(menuData: String) {
+private fun placeorder(patronName: String, menuData: String) {
     val indexOfApostrophe = TAVERN_NAME.indexOf('\'')
     val tavernMaster = TAVERN_NAME.substring(0 until indexOfApostrophe)
-    println("Madrigal speaks with $tavernMaster about their order.")
+    println("$patronName speaks with $tavernMaster about their order.")
     val (type, name, price) = menuData.split(',')
-
-    val message = "Madrigal buys a $name ($type) for $price"
+    val message = "$patronName buys a $name ($type) for $price"
     println(message)
-    perfomPurchase(price.toDouble())
+//    perfomPurchase(price.toDouble())
     var phrase = "DRAGON'S BREATH: IT'S GOT WHAT ADVENTURERS CRAVE! $name"
-    println("Madrigal exclaims: ${toDragonSpeak(phrase)}")
+//    println("Madrigal exclaims: ${toDragonSpeak(phrase)}")
     phrase = if (name == "Dragon's Breath"){
-        "Madrigal exclaims ${toDragonSpeak("Ah, delicious $name")}"
+        "$patronName exclaims ${toDragonSpeak("Ah, delicious $name")}"
     }else{
-        "Madrigal says: Thanks for the $name"
+        "$patronName says: Thanks for the $name"
     }
     println(phrase)
 }
