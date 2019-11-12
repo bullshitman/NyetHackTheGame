@@ -1,24 +1,34 @@
 import kotlin.math.roundToInt
+import java.io.File
 const val TAVERN_NAME = "Taernyl's Folly"
 var playerGold = 10
 var playerSilver = 10
 val patronList = mutableListOf("Eli", "Mordoc", "Sophie")
-val readOnlyPatronList = patronList.toList()
+val menuList = File("data/tavern_menu_data.txt").readText().split("\n")
+val uniquePatrons = mutableSetOf<String>()
 fun main(args: Array<String>) {
-    if (patronList.contains("Eli")){
-        println("The tavern master says: Eli's in the back playing cards.")
-    }else{
-        println("The tavern master says: Eli isn't here.")
+
+    (0..9).forEach {
+        val first = patronList.shuffled().first()
+        val last = patronList.shuffled().first()
+        val name = "$first $last"
+        uniquePatrons += name
     }
-    if (patronList.containsAll(listOf("Mordoc", "Sophie"))){
-        println("The tavern master says: Yea, they're seated by the stew kettle.")
-    }else{
-        println("The tavern master says: No, they departed hours ago.")
+    println(uniquePatrons)
+    var orderCount = 0
+    var isTavernOpen = true
+    val isClosingTime = false
+    while (orderCount <= 9){
+        placeorder(uniquePatrons.shuffled().first(), menuList.shuffled().first())
+        orderCount++
     }
-    patronList.forEachIndexed { index,  patron ->
-        println("Good evening $patron - you're #${index + 1} in line.")
-        placeorder(patron, "shandy,Dragon's Breath,5.91")
+    while (isTavernOpen == true){
+        if (isClosingTime){
+            break
+        }
+        println("Having a grand old time!")
     }
+
 //    placeorder("shandy, Dragon's Breath, 5.91")
 //    placeorder("elixir,Shirley's Temple,4.12")
 }
