@@ -6,31 +6,46 @@ var playerSilver = 10
 val patronList = mutableListOf("Eli", "Mordoc", "Sophie")
 val menuList = File("data/tavern_menu_data.txt").readText().split("\n")
 val uniquePatrons = mutableSetOf<String>()
+const val STRING_LENGHT = 50
 fun main(args: Array<String>) {
+    val greetingString = " Welcome to $TAVERN_NAME "
+    println(charAdd((STRING_LENGHT - greetingString.length)/2-3, ' ') + charAdd(3, '*') + greetingString + charAdd(3, '*') + charAdd((STRING_LENGHT - greetingString.length)/2-3, ' '))
+    menuList.forEachIndexed{index, menuItem ->
+        val(_, name, price) = menuItem.split(",")
+        println("${correctName(name).joinToString (" ")} ${charAdd(STRING_LENGHT - correctName(name).joinToString(" ").length - price.length, '.')} $price")
+    }
+//    (0..9).forEach {
+//        val first = patronList.shuffled().first()
+//        val last = patronList.shuffled().first()
+//        val name = "$first $last"
+//        uniquePatrons += name
+//    }
+//    println(uniquePatrons)
+//    var orderCount = 0
+//    var isTavernOpen = true
+//    val isClosingTime = false
+//    while (orderCount <= 9){
+//        placeorder(uniquePatrons.shuffled().first(), menuList.shuffled().first())
+//        orderCount++
+//    }
 
-    (0..9).forEach {
-        val first = patronList.shuffled().first()
-        val last = patronList.shuffled().first()
-        val name = "$first $last"
-        uniquePatrons += name
-    }
-    println(uniquePatrons)
-    var orderCount = 0
-    var isTavernOpen = true
-    val isClosingTime = false
-    while (orderCount <= 9){
-        placeorder(uniquePatrons.shuffled().first(), menuList.shuffled().first())
-        orderCount++
-    }
-    while (isTavernOpen == true){
-        if (isClosingTime){
-            break
-        }
-        println("Having a grand old time!")
-    }
 
 //    placeorder("shandy, Dragon's Breath, 5.91")
 //    placeorder("elixir,Shirley's Temple,4.12")
+}
+fun correctName(name: String) :List<String> {
+    val menuItemList: MutableList<String> = name.split(" ").toMutableList()
+    menuItemList.forEachIndexed{index, item ->
+        if (item[0].isLowerCase()){
+            menuItemList[index] = item.capitalize()
+        }
+    }
+    return menuItemList
+}
+fun charAdd (Iter: Int, letter: Char) = buildString{
+    repeat(Iter){
+        append(letter)
+    }
 }
 
 fun perfomPurchase(price: Double){
