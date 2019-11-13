@@ -6,13 +6,34 @@ var playerSilver = 10
 val patronList = mutableListOf("Eli", "Mordoc", "Sophie")
 val menuList = File("data/tavern_menu_data.txt").readText().split("\n")
 val uniquePatrons = mutableSetOf<String>()
+val uniqueTypes = mutableSetOf<String>()
 const val STRING_LENGHT = 50
 fun main(args: Array<String>) {
     val greetingString = " Welcome to $TAVERN_NAME "
     println(charAdd((STRING_LENGHT - greetingString.length)/2-3, ' ') + charAdd(3, '*') + greetingString + charAdd(3, '*') + charAdd((STRING_LENGHT - greetingString.length)/2-3, ' '))
-    menuList.forEachIndexed{index, menuItem ->
-        val(_, name, price) = menuItem.split(",")
-        println("${correctName(name).joinToString (" ")} ${charAdd(STRING_LENGHT - correctName(name).joinToString(" ").length - price.length, '.')} $price")
+    menuList.forEach { menuItem ->
+        val (type, _, _) = menuItem.split(",")
+        uniqueTypes += type
+    }
+    uniqueTypes.forEach {type ->
+        println(
+            charAdd((STRING_LENGHT - type.length) / 2 - 2, ' ') + charAdd(1, '~') + charAdd(
+                1,
+                '['
+            ) + type + charAdd(1, ']') + charAdd(1, '~') + charAdd((STRING_LENGHT - type.length) / 2 - 2, ' ')
+        )
+        menuList.forEach { menuString ->
+            val (currentType, name, price) = menuString.split(",")
+            if (currentType == type) {
+                println(
+                    "${correctName(name).joinToString(" ")}${charAdd(
+                        STRING_LENGHT - correctName(name).joinToString(
+                            " "
+                        ).length - price.length, '.'
+                    )}$price"
+                )
+            }
+        }
     }
 //    (0..9).forEach {
 //        val first = patronList.shuffled().first()
