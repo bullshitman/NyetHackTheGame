@@ -30,6 +30,7 @@ private fun auraColor(isBlessed: Boolean, healthPoint: Int, isImmortal: Boolean)
     return auraColor
 }
 
+
 private fun formatHealthStatus(healthPoint: Int, isBlessed: Boolean) = when (healthPoint) {
         100 -> "is in good condition!"
         in 90..99 -> "has a few scratches."
