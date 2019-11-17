@@ -6,7 +6,6 @@ val menuList = File("data/tavern_menu_data.txt").readText().split("\n")
 val uniquePatrons = mutableSetOf<String>()
 val patronGold = mutableMapOf<String, Double>()
 fun main(args: Array<String>) {
-
     (0..9).forEach {
         val first = patronList.shuffled().first()
         val last = patronList.shuffled().first()
@@ -23,11 +22,10 @@ fun main(args: Array<String>) {
     }
     println(patronGold)
     displayPatronBalances()
-
 }
 
 fun displayPatronBalances() {
-    patronGold.forEach { patron, balance ->
+    patronGold.forEach { (patron, balance) ->
         println("$patron, balance:  ${"%.2f".format(balance)}")
     }
 }

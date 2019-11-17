@@ -14,7 +14,6 @@ fun main(args: Array<String>) {
 private fun castFireball(numFireballs: Int = 2) =
     println("A glass of Fireball springs into existence. (x$numFireballs)")
 
-
 private fun printPlayerStatus(
     auraColor: String,
     isBlessed: Boolean,
@@ -42,4 +41,4 @@ private fun formatHealthStatus(healthPoint: Int, isBlessed: Boolean) = when (hea
             }
         in 15..74 -> "looks pretty hurt."
         else -> "is in awful condition!"
-    }
+}
