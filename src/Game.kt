@@ -3,10 +3,8 @@ fun main(args: Array<String>) {
     var healthPoint = 89
     val isBlessed = true
     val isImmortal = false
-    //Aura checking
     val auraColor = auraColor(isBlessed, healthPoint, isImmortal)
     val healthStatus = formatHealthStatus(healthPoint, isBlessed)
-    //Player status
     printPlayerStatus(auraColor, isBlessed, name, healthStatus)
     castFireball()
 }
