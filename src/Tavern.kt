@@ -46,7 +46,6 @@ private fun toDragonSpeak(phrase: String) =
             else -> it.value
         }
     }
-
 private fun placeorder(patronName: String, menuData: String) {
     val indexOfApostrophe = TAVERN_NAME.indexOf('\'')
     val tavernMaster = TAVERN_NAME.substring(0 until indexOfApostrophe)
