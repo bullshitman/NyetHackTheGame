@@ -1,4 +1,3 @@
-import kotlin.math.roundToInt
 import java.io.File
 const val TAVERN_NAME = "Taernyl's Folly"
 val patronList = mutableListOf("Eli", "Mordoc", "Sophie")
@@ -52,14 +51,26 @@ private fun placeorder(patronName: String, menuData: String) {
     val tavernMaster = TAVERN_NAME.substring(0 until indexOfApostrophe)
     println("$patronName speaks with $tavernMaster about their order.")
     val (type, name, price) = menuData.split(',')
-    val message = "$patronName buys a $name ($type) for $price"
-    println(message)
-    performPurchase(price.toDouble(), patronName)
-    var phrase = "DRAGON'S BREATH: IT'S GOT WHAT ADVENTURERS CRAVE! $name"
-    phrase = if (name == "Dragon's Breath"){
-        "$patronName exclaims ${toDragonSpeak("Ah, delicious $name")}"
+    var message = ""
+    if (checkPatronsBalance(patronName, price.toDouble())) {
+        message = "$patronName buys a $name ($type) for $price"
+        performPurchase(price.toDouble(), patronName)
+        var phrase = "DRAGON'S BREATH: IT'S GOT WHAT ADVENTURERS CRAVE! $name"
+        phrase = if (name == "Dragon's Breath"){
+            "$patronName exclaims ${toDragonSpeak("Ah, delicious $name")}"
+        }else{
+            "$patronName says: Thanks for the $name"
+        }
+        println(phrase)
     }else{
-        "$patronName says: Thanks for the $name"
+        message = "$patronName has no money to buy a $name ($type) for $price"
+        uniquePatrons.remove(patronName)
     }
-    println(phrase)
+    println(message)
+
+}
+
+fun checkPatronsBalance(patronName: String, price: Double):Boolean {
+    val totalPurse = patronGold.getValue(patronName)
+    return (totalPurse - price) > 0
 }
