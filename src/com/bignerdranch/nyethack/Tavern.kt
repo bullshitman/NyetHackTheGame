@@ -1,4 +1,5 @@
-import kotlin.math.roundToInt
+package com.bignerdranch.nyethack
+
 import java.io.File
 const val TAVERN_NAME = "Taernyl's Folly"
 val patronList = mutableListOf("Eli", "Mordoc", "Sophie")
@@ -17,7 +18,10 @@ fun main(args: Array<String>) {
     }
     var orderCount = 0
     while (orderCount <= 9){
-        placeorder(uniquePatrons.shuffled().first(), menuList.shuffled().first())
+        placeorder(
+            uniquePatrons.shuffled().first(),
+            menuList.shuffled().first()
+        )
         orderCount++
     }
     println(patronGold)
