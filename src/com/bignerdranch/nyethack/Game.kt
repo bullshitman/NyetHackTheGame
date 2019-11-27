@@ -5,6 +5,9 @@ fun main() {
     val player = Player("Madrigal")
     printPlayerStatus(player)
     player.castFireball()
+    val currentRoom = Room("Foyer")
+    println(currentRoom.description())
+    println(currentRoom.load())
 }
 
 private fun printPlayerStatus(
