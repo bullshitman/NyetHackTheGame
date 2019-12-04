@@ -18,12 +18,22 @@ object Game {
             //condition
             printPlayerStatus(player)
             print("> Enter your command: ")
-            println("Last command: ${readLine()}")
+            println(GameInput(readLine()).processCommand())
         }
     }
     private fun printPlayerStatus(player: Player) {
         println("(Aura: ${player.auraColor()}) " + "(Blessed: ${if (player.isBlessed) "YES" else "NO"})")
         println("${player.name} ${player.formatHealthStatus()}")
+    }
+    private class GameInput(arg: String?) {
+        private val input = arg ?: ""
+        val command = input.split(" ")[0]
+        val argument = input.split(" ").getOrElse(1, { "" })
+        private fun commandNotFound() = "I'm not quite sure what you're trying to do!"
+        fun processCommand() = when(command.toLowerCase()) {
+            else -> commandNotFound()
+    }
+
     }
 }
 
