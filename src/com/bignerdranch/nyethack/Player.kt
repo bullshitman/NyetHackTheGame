@@ -9,8 +9,6 @@ class Player (_name: String, var healthPoints: Int = 100, val isBlessed: Boolean
     private val hometown by lazy {selectHomeTown()}
     val currentPosition = Coordinate(0 , 0)
 
-
-
     init {
         require(healthPoints > 0, {"healthPoints must be greater than zero."})
         require(name.isNotBlank(), {"Player must have a name"})
