@@ -31,8 +31,7 @@ object Game {
         private fun commandNotFound() = "I'm not quite sure what you're trying to do!"
         fun processCommand() = when(command.toLowerCase()) {
             else -> commandNotFound()
-    }
-
+        }
     }
 }
 
