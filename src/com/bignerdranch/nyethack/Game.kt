@@ -2,6 +2,7 @@ package com.bignerdranch.nyethack
 
 import java.lang.Exception
 import java.lang.IllegalStateException
+import kotlin.system.exitProcess
 
 fun main() {
 
@@ -19,13 +20,21 @@ object Game {
         player.castFireball()
     }
     fun play() {
-        while (true) {
+        var inputeString: String
+        var condition = true
+        while (condition) {
             println(currentRoom.description())
             println(currentRoom.load())
 
             printPlayerStatus(player)
             print("> Enter your command: ")
-            println(GameInput(readLine()).processCommand())
+            inputeString = readLine().toString()
+            if (inputeString.toLowerCase() == "quit") {
+                condition = false
+                println("Game over, see you next time")
+            }else{
+            println(GameInput(inputeString).processCommand())
+            }
         }
     }
     private fun printPlayerStatus(player: Player) {
@@ -36,9 +45,12 @@ object Game {
         private val input = arg ?: ""
         val command = input.split(" ")[0]
         val argument = input.split(" ").getOrElse(1, { "" })
+
         private fun commandNotFound() = "I'm not quite sure what you're trying to do!"
+
         fun processCommand() = when(command.toLowerCase()) {
             "move" -> move(argument)
+            "quit" -> quit()
             else -> commandNotFound()
         }
     }
@@ -56,5 +68,9 @@ object Game {
         } catch (e: Exception) {
             "Invalid direction: $directionInput."
         }
+    private fun quit() {
+        println("Game over, see you next time")
+        exitProcess(1)
+    }
 }
 
