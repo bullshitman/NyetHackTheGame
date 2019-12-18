@@ -20,21 +20,13 @@ object Game {
         player.castFireball()
     }
     fun play() {
-        var inputeString: String
-        var condition = true
-        while (condition) {
+        while (true) {
             println(currentRoom.description())
             println(currentRoom.load())
 
             printPlayerStatus(player)
             print("> Enter your command: ")
-            inputeString = readLine().toString()
-            if (inputeString.toLowerCase() == "quit") {
-                condition = false
-                println("Game over, see you next time")
-            }else{
-            println(GameInput(inputeString).processCommand())
-            }
+            println(GameInput(readLine()).processCommand())
         }
     }
     private fun printPlayerStatus(player: Player) {
