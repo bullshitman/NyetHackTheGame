@@ -55,11 +55,27 @@ object Game {
             }
             val newRoom = worldMap[newPosition.y][newPosition.x]
             player.currentPosition = newPosition
-            currentRoom = newRoom
+            drawMap(currentRoom = newRoom)
+
             "OK, you move $direction to the ${newRoom.name}.\n${newRoom.load()}"
         } catch (e: Exception) {
             "Invalid direction: $directionInput."
         }
+
+    private fun drawMap(currentRoom: Room) {
+        for (rooms in worldMap) {
+            for (room in rooms) {
+                if (room == currentRoom) {
+                    print("X")
+                } else {
+                    print("O")
+                }
+            }
+            print("\n")
+        }
+
+    }
+
     private fun quit() {
         println("Game over, see you next time")
         exitProcess(1)
