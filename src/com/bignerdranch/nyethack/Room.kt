@@ -6,12 +6,16 @@ open class Room(val name:String){
         return "Room $name\nDanger level: $dangerLevel"
     }
     open fun load() = "Nothing much to see here..."
+    open fun ringBell(count: Int) = "You can't ring the bell here."
 }
 class TownSquare: Room("Town Square") {
     override val dangerLevel = super.dangerLevel - 3
     private var bellSound = "GWONG"
     final override fun load() =
-        "The villagers rally and cheer as you enter! \n${ringBell()}"
+        "The villagers rally and cheer as you enter! \n${ringBell(1)}"
 
-    private fun ringBell() = "The bell tower announces your arrival. $bellSound"
+    override fun ringBell(count: Int) =
+        (0 until count-1).forEach{
+            println("You are rinning the bell!")
+        }
 }

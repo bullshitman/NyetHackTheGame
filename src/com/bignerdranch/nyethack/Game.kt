@@ -43,6 +43,7 @@ object Game {
         fun processCommand() = when(command.toLowerCase()) {
             "move" -> move(argument)
             "quit" -> quit()
+            "ring" -> currentRoom.ringBell(argument.toInt())
             else -> commandNotFound()
         }
     }
@@ -73,9 +74,7 @@ object Game {
             }
             print("\n")
         }
-
     }
-
     private fun quit() {
         println("Game over, see you next time")
         exitProcess(1)
