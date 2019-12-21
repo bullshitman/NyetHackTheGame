@@ -43,7 +43,7 @@ object Game {
         fun processCommand() = when(command.toLowerCase()) {
             "move" -> move(argument)
             "quit" -> quit()
-            "ring" -> currentRoom.ringBell(argument.toInt())
+            "ring" -> currentRoom.ringBell()
             else -> commandNotFound()
         }
     }
