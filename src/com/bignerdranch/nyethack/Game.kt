@@ -56,7 +56,8 @@ object Game {
             }
             val newRoom = worldMap[newPosition.y][newPosition.x]
             player.currentPosition = newPosition
-            drawMap(currentRoom = newRoom)
+            currentRoom = newRoom
+            drawMap(currentRoom)
 
             "OK, you move $direction to the ${newRoom.name}.\n${newRoom.load()}"
         } catch (e: Exception) {
