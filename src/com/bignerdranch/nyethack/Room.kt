@@ -2,8 +2,10 @@ package com.bignerdranch.nyethack
 
 open class Room(val name:String){
     protected open val dangerLevel = 5
+    var monster: Monster? = Goblin()
     fun description(): String {
-        return "Room $name\nDanger level: $dangerLevel"
+        return "Room $name\nDanger level: $dangerLevel\n" +
+                "Creature: ${monster?.description ?: "none."}"
     }
     open fun load() = "Nothing much to see here..."
     open fun ringBell() = "You can't ring the bell here."

@@ -3,7 +3,7 @@ package com.bignerdranch.nyethack
 import java.io.File
 
 class Player (_name: String, override var healthPoints: Int = 100, val isBlessed: Boolean, private val isImmortal: Boolean):Fightable {
-    override val diceCount: Int = 3
+    override val direCount: Int = 3
     override val diceSides: Int = 6
     override fun attack(opponent: Fightable): Int {
         val damageDealt = if (isBlessed) {

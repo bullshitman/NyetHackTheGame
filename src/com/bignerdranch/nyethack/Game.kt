@@ -1,5 +1,6 @@
 package com.bignerdranch.nyethack
 
+import com.sun.javafx.scene.traversal.TopMostTraversalEngine
 import java.lang.Exception
 import java.lang.IllegalStateException
 import kotlin.system.exitProcess
@@ -42,6 +43,7 @@ object Game {
 
         fun processCommand() = when(command.toLowerCase()) {
             "move" -> move(argument)
+            "fight" -> fight()
             "quit" -> quit()
             "ring" -> currentRoom.ringBell()
             else -> commandNotFound()
@@ -63,7 +65,25 @@ object Game {
         } catch (e: Exception) {
             "Invalid direction: $directionInput."
         }
-
+    private fun fight() = currentRoom.monster?.let {
+        while (player.healthPoints > 0 && it.healthPoints > 0){
+            slay(it)
+            Thread.sleep(1000)
+        }
+        "Combat complete."
+    } ?: "There is nothing here to fight."
+    private fun slay(monster: Monster) {
+        println("${monster.name} did ${monster.attack(player)} damage!")
+        println("${player.name} did ${player.attack(monster)} damage!")
+        if (player.healthPoints <= 0) {
+            println(">>>> You have been defeated! Thanks for playing. <<<<")
+            quit()
+        }
+        if (monster.healthPoints <= 0) {
+            println(">>>> ${monster.name} has beed defeated!<<<<")
+            currentRoom.monster = null
+        }
+    }
     private fun drawMap(currentRoom: Room) {
         for (rooms in worldMap) {
             for (room in rooms) {
