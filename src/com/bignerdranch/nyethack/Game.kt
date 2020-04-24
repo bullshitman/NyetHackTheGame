@@ -1,12 +1,19 @@
+import kotlin.math.pow
+
 fun main(args: Array<String>) {
     val name = "Madrigal"
     val isBlessed = true
     var healthPoint = 100
     val isImmortal = false
+    val statusFormatString = "(HP)(A)(B) -> H"
     val auraVisible = isBlessed && healthPoint > 50 || isImmortal
-    val auraColor = if (auraVisible) "GREEN" else "NONE"
-
-
+    val auraColor = when ((Math.random().pow((110 - healthPoint) / 100.0) * 20 ).toInt()) {
+        in 0..5 -> "RED"
+        in 6..10 -> "ORANGE"
+        in 11..15 -> "PURPLE"
+        in 16..20 -> "GREEN"
+        else -> ""
+    }
     val healthStatus = when (healthPoint) {
         100 -> "is in excellent condition!"
         in 90..99 -> "has a few scratches."
@@ -18,7 +25,8 @@ fun main(args: Array<String>) {
         in 15..74 -> "looks pretty hurt"
         else -> "is in awful condition!"
     }
-    println("(Aura: $auraColor) " +
-    "(Blessed: ${if (isBlessed) "YES" else "NO"})")
-    println("$name $healthStatus")
+    println(statusFormatString.replace("HP", "Points: $healthPoint")
+                              .replace("A", "Aura: ${if (auraVisible) auraColor else "NONE"}")
+                              .replace("B", "Blessed: ${if (isBlessed) "YES" else "NO"}")
+                              .replace("H", "$name $healthStatus"))
 }
