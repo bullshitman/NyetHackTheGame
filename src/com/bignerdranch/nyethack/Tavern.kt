@@ -1,7 +1,13 @@
+import java.math.RoundingMode
+import kotlin.math.roundToInt
+
 const val TAVERN_NAME = "Taernyl's Folly"
+var playerGold = 10
+var playerSilver = 10
+
 fun main(args: Array<String>) {
     placeOrder("Shandy,Dragon's Breath,5.91")
-//    placeOrder("elixir,Shirley's Temple,4.12")
+
 }
 
 private fun placeOrder(menuData: String) {
@@ -11,6 +17,7 @@ private fun placeOrder(menuData: String) {
     val (type, name, price) = menuData.split(',')
     val message = "Madrigal buys a $name ($type) for $price."
     println(message)
+    preformPurchase(price.toDouble())
 //    val phrase = "Ah, delicious $name"
 //    println("Madrigal exclaims: ${toDragonSpeak(phrase)}")
     val phrase = if (name == "Dragon's Breath") {
@@ -19,6 +26,33 @@ private fun placeOrder(menuData: String) {
         "Madrigal says: Thanks for the $name"
     }
     println(phrase)
+}
+
+private fun preformPurchase(price: Double) {
+    displayBalance()
+    val totalPurse = playerGold + (playerSilver/100.0)
+    println("Total purse: $totalPurse")
+    println("Purchasing item for $price")
+    if (checkPlayerBalance(price, totalPurse)) {
+        val remainingBalance = totalPurse - price
+        println("remaining balance: ${"%.2f".format(remainingBalance)}")
+        val remainingGold = remainingBalance.toInt()
+        val remainingSilver = (remainingBalance % 1 * 100).roundToInt()
+        playerGold = remainingGold
+        playerSilver = remainingSilver
+        displayBalance()
+    } else {
+        println("Not enough money.")
+    }
+
+}
+
+private fun checkPlayerBalance(price: Double, totalPurse: Double): Boolean {
+    return (totalPurse - price) > 0
+}
+
+private fun displayBalance() {
+    println("Player's purse balance: Gold: $playerGold, Silver: $playerSilver")
 }
 
 private fun toDragonSpeak(phrase: String) =
