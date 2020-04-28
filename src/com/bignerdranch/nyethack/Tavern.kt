@@ -1,29 +1,42 @@
-import java.math.RoundingMode
+import java.io.File
 import kotlin.math.roundToInt
 
 const val TAVERN_NAME = "Taernyl's Folly"
 var playerGold = 10
 var playerSilver = 10
-
+val patronList = mutableListOf("Eli", "Mordoc", "Sophie")
+val lastName = listOf("Ironfoot", "Fernsworth", "Baggins")
+val uniqPatrons = mutableSetOf<String>()
+val menuList = File("data/tavern_menu_data.txt").readText().split("\n")
 fun main(args: Array<String>) {
-    placeOrder("Shandy,Dragon's Breath,5.91")
-
+    (0..9).forEach {
+        val first = patronList.shuffled().first()
+        val last = lastName.shuffled().first()
+        val name = "$first $last"
+        uniqPatrons += name
+    }
+    println(uniqPatrons)
+    var orderCount = 0
+    while (orderCount <= 9) {
+        placeOrder(uniqPatrons.shuffled().first(), menuList.shuffled().first())
+        orderCount++
+    }
 }
 
-private fun placeOrder(menuData: String) {
+private fun placeOrder(patronName: String, menuData: String) {
     val indexOfApostrophe = TAVERN_NAME.indexOf('\'')
     val tavernMaster = TAVERN_NAME.substring(0 until indexOfApostrophe)
-    println("Madrigal speaks with $tavernMaster about their order.")
+    println("$patronName speaks with $tavernMaster about their order.")
     val (type, name, price) = menuData.split(',')
-    val message = "Madrigal buys a $name ($type) for $price."
+    val message = "$patronName buys a $name ($type) for ${price.trimMargin()}."
     println(message)
-    preformPurchase(price.toDouble())
+//    preformPurchase(price.toDouble())
 //    val phrase = "Ah, delicious $name"
 //    println("Madrigal exclaims: ${toDragonSpeak(phrase)}")
     val phrase = if (name == "Dragon's Breath") {
-        "Madrigal exclaims ${toDragonSpeak("Ah, delicious $name")}"
+        "$patronName exclaims ${toDragonSpeak("Ah, delicious $name")}"
     } else {
-        "Madrigal says: Thanks for the $name"
+        "$patronName says: Thanks for the $name"
     }
     println(phrase)
 }
@@ -33,7 +46,6 @@ private fun preformPurchase(price: Double) {
     val totalPurse = playerGold + (playerSilver/100.0)
     println("Total purse: $totalPurse")
     println("Purchasing item for $price")
-    if (checkPlayerBalance(price, totalPurse)) {
         val remainingBalance = totalPurse - price
         println("remaining balance: ${"%.2f".format(remainingBalance)}")
         val remainingGold = remainingBalance.toInt()
@@ -41,14 +53,6 @@ private fun preformPurchase(price: Double) {
         playerGold = remainingGold
         playerSilver = remainingSilver
         displayBalance()
-    } else {
-        println("Not enough money.")
-    }
-
-}
-
-private fun checkPlayerBalance(price: Double, totalPurse: Double): Boolean {
-    return (totalPurse - price) > 0
 }
 
 private fun displayBalance() {
