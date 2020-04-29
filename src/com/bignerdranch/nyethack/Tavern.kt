@@ -33,8 +33,15 @@ private fun performPurchase(price: Double, patronName: String) {
 }
 
 private fun displayPatronBalance() {
-    patronGold.forEach { patron, balance ->
-        println("$patron, balance: ${"%.2f".format(balance)}")
+    val iterator = patronGold.iterator()
+    while (iterator.hasNext()) {
+        var patron = iterator.next()
+            println("${patron.key}, balance: ${"%.2f".format(patron.value)}")
+            if (patron.value < 0) {
+                uniqPatrons.remove(patron.key)
+                iterator.remove()
+                println("${patron.key} going out.")
+            }
     }
 }
 
