@@ -1,7 +1,7 @@
 import com.bignerdranch.nyethack.Coordinate
 import java.io.File
 
-class Player (_name: String, var healthPoints: Int = 100, val isBlessed: Boolean, private val isImmortal: Boolean) {
+class Player (_name: String,override var healthPoints: Int = 100, val isBlessed: Boolean, private val isImmortal: Boolean):Fightable {
     var name = "madrigal"
         get() = "${field.capitalize()} of ${homeTown.trimMargin()}"
         private set (value) {
@@ -9,6 +9,20 @@ class Player (_name: String, var healthPoints: Int = 100, val isBlessed: Boolean
         }
     val homeTown by lazy { selectHomeTown() }
     var currentPosition = Coordinate(0, 0)
+
+    override val diceCount: Int = 3
+
+    override val diceSides: Int = 6
+
+    override fun attack(opponent: Fightable): Int {
+        val damageDealt = if (isBlessed) {
+            damageRoll * 2
+        } else {
+            damageRoll
+        }
+        opponent.healthPoints -= damageDealt
+        return damageDealt
+    }
 
     init {
         require(healthPoints > 0, { "healthPoints must be greater than zero." })
