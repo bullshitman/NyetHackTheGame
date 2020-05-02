@@ -18,13 +18,14 @@ object Game {
         player.castFireball()
     }
     fun play() {
+        var result : Any
         while (true) {
             println(currentRoom.description())
             println(currentRoom.load())
             printPlayerStatus(player)
-
             print("> Enter your command: ")
-            println(GameInput(readLine()).processCommand())
+            result = GameInput(readLine()).processCommand()
+            if (result !is String) break else println(result)
         }
     }
     private fun printPlayerStatus(player: Player) {
@@ -38,10 +39,32 @@ object Game {
 
         fun processCommand() = when (command.toLowerCase()) {
             "move" -> move(argument)
+            "quit" -> quitCommand()
+            "map"  -> printMap()
+            "ring" -> ringTheBell()
             else -> commandNotFound()
         }
         private fun commandNotFound() = "I'm not quite sure what you're trying to do!"
+        private fun quitCommand(): Boolean {
+            println("Good buy.")
+            return false
+        }
+        private fun printMap() : String {
+            for (listLine in worldMap) {
+                for(element in listLine) {
+                    print(if (element == currentRoom) " X " else " O ")
+                }
+                print("\n")
+            }
+            return "You're here - X"
+        }
     }
+    private fun ringTheBell () =
+        if (currentRoom is TownSquare) {
+            (currentRoom as TownSquare).ringBell()
+        } else {
+            " You're not on townsquare."
+        }
     private fun move(directionInput: String) =
         try {
             val direction = Direction.valueOf(directionInput.toUpperCase())
