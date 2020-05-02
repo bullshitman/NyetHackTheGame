@@ -1,5 +1,5 @@
+import com.bignerdranch.nyethack.Coordinate
 import java.io.File
-import java.math.BigInteger
 
 class Player (_name: String, var healthPoints: Int = 100, val isBlessed: Boolean, private val isImmortal: Boolean) {
     var name = "madrigal"
@@ -8,6 +8,7 @@ class Player (_name: String, var healthPoints: Int = 100, val isBlessed: Boolean
             field = value.trim()
         }
     val homeTown by lazy { selectHomeTown() }
+    var currentPosition = Coordinate(0, 0)
 
     init {
         require(healthPoints > 0, { "healthPoints must be greater than zero." })
