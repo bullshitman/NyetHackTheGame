@@ -1,5 +1,6 @@
 import com.bignerdranch.nyethack.Coordinate
 import java.io.File
+import com.bignerdranch.nyethack.extensions.random as randomizer
 
 class Player (_name: String,override var healthPoints: Int = 100, val isBlessed: Boolean, private val isImmortal: Boolean):Fightable {
     var name = "madrigal"
@@ -56,6 +57,5 @@ class Player (_name: String,override var healthPoints: Int = 100, val isBlessed:
     private fun selectHomeTown() = File("data/towns.txt")
         .readText()
         .split("\n")
-        .shuffled()
-        .first()
+        .randomizer()
 }

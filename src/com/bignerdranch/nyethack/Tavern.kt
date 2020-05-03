@@ -1,5 +1,5 @@
 import java.io.File
-import kotlin.math.roundToInt
+import com.bignerdranch.nyethack.extensions.random
 
 const val TAVERN_NAME = "Taernyl's Folly"
 val patronList = mutableListOf("Eli", "Mordoc", "Sophie")
@@ -9,8 +9,8 @@ val menuList = File("data/tavern_menu_data.txt").readText().split("\n")
 val patronGold = mutableMapOf<String, Double>()
 fun main(args: Array<String>) {
     (0..9).forEach {
-        val first = patronList.shuffled().first()
-        val last = lastName.shuffled().first()
+        val first = patronList.random()
+        val last = lastName.random()
         val name = "$first $last"
         uniqPatrons += name
     }
@@ -20,7 +20,7 @@ fun main(args: Array<String>) {
     }
     var orderCount = 0
     while (orderCount <= 9) {
-        placeOrder(uniqPatrons.shuffled().first(), menuList.shuffled().first())
+        placeOrder(uniqPatrons.random(), menuList.random())
         orderCount++
     }
     displayPatronBalance()
