@@ -7,6 +7,16 @@ val lastName = listOf("Ironfoot", "Fernsworth", "Baggins")
 val uniqPatrons = mutableSetOf<String>()
 val menuList = File("data/tavern_menu_data.txt").readText().split("\n")
 val patronGold = mutableMapOf<String, Double>()
+private fun String.toDragonSpeak() = this.toUpperCase().replace(Regex("[AEIOU]")){
+    when (it.value) {
+        "A" -> "4"
+        "E" -> "3"
+        "I" -> "1"
+        "O" -> "0"
+        "U" -> "|_|"
+        else -> it.value
+    }
+}
 fun main(args: Array<String>) {
     (0..9).forEach {
         val first = patronList.random()
@@ -49,21 +59,9 @@ private fun placeOrder(patronName: String, menuData: String) {
 //    val phrase = "Ah, delicious $name"
 //    println("Madrigal exclaims: ${toDragonSpeak(phrase)}")
     val phrase = if (name == "Dragon's Breath") {
-        "$patronName exclaims ${toDragonSpeak("Ah, delicious $name")}"
+        "$patronName exclaims " + "Ah, delicious $name".toDragonSpeak()
     } else {
         "$patronName says: Thanks for the $name"
     }
     println(phrase)
 }
-
-private fun toDragonSpeak(phrase: String) =
-    phrase.toUpperCase().replace(Regex("[AEIOU]")){
-        when (it.value) {
-            "A" -> "4"
-            "E" -> "3"
-            "I" -> "1"
-            "O" -> "0"
-            "U" -> "|_|"
-            else -> it.value
-        }
-    }

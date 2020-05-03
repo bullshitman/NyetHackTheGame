@@ -1,4 +1,5 @@
 import com.bignerdranch.nyethack.Direction
+import com.bignerdranch.nyethack.extensions.frame
 
 fun main(args: Array<String>) {
     Game.play()
@@ -19,6 +20,7 @@ object Game {
     }
     fun play() {
         while (true) {
+            println("Welcome, ${player.name}!".frame(5))
             println(currentRoom.description())
             println(currentRoom.load())
             printPlayerStatus(player)
